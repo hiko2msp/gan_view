@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <title>画像生成</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      function changeValue(value, index) {
+        document.getElementById("val" + index).innerHTML = value / 100;
+      }
+    </script>
+  </head>
+  <body>
+    <div class="header">
+    </div>
+    <div class="container">
+      <h3>モデル確認</h3>
+      <form action="/upload_model" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" style="display:inline">
+        <input type="submit" value="モデルのアップロード">
+      </form>
+      <h3>画像生成</h3>
+      <div class="row">
+        <div class="col-xs-6">
+          <form action="/generate" method="get">
+          {% for noise in initlal_noises %}
+          <div class="row">
+            <div class="col-xs-1">
+              {{ loop.index0 + 1 }} 
+            </div>
+            <div class="col-xs-4">
+              <input type="range" name="{{ loop.index0 }}" min="0" max="100" step="5" value="{{noise}}" onchange="changeValue(this.value, {{ loop.index0 }})">
+            </div>
+            <div class="col-xs-1">
+              <span id="val{{ loop.index0 }}">{{noise / 100}}</span>
+            </div>
+          </div>
+          {% endfor %}
+          <input type="submit" value="生成">
+          </form>
+        </div>
+        <div class="col-xs-6">
+        {% if image %}
+          <img src="data:image/png;base64,{{image}}" alt="生成された画像" width="200", height="200" style="border: solid 1px; border-color: black">
+        {% endif %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

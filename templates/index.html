@@ -25,26 +25,17 @@
       <h3>画像生成</h3>
       <div class="row">
         <div class="col-xs-6">
-          <form action="/generate" method="get">
-          {% for noise in initlal_noises %}
-          <div class="row">
-            <div class="col-xs-1">
-              {{ loop.index0 + 1 }} 
-            </div>
-            <div class="col-xs-4">
-              <input type="range" name="{{ loop.index0 }}" min="0" max="100" step="5" value="{{noise}}" onchange="changeValue(this.value, {{ loop.index0 }})">
-            </div>
-            <div class="col-xs-1">
-              <span id="val{{ loop.index0 }}">{{noise / 100}}</span>
-            </div>
-          </div>
-          {% endfor %}
-          <input type="submit" value="生成">
+          <form action="/upload_image" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" style="display:inline">
+            <input type="submit" value="画像のアップロード">
           </form>
+          {% if origin_image %}
+            <img src="data:image/png;base64,{{origin_image}}" alt="元画像" width="200", height="200" style="border: solid 1px; border-color: black">
+          {% endif %}
         </div>
         <div class="col-xs-6">
-        {% if image %}
-          <img src="data:image/png;base64,{{image}}" alt="生成された画像" width="200", height="200" style="border: solid 1px; border-color: black">
+        {% if segmented_image %}
+          <img src="data:image/png;base64,{{segmented_image}}" alt="生成された画像" width="200", height="200" style="border: solid 1px; border-color: black">
         {% endif %}
         </div>
       </div>

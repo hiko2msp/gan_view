@@ -52,15 +52,13 @@ def clip_img(x):
 gen = Generator()
 gen.to_cpu()
 
-model_file = 'model.h5'
-serializers.load_hdf5(model_file, gen)
-
-
 def load_image(filepath):
     img = Image.open(filepath)
     return img
 
 def segment(img):
+    model_file = 'model.h5'
+    serializers.load_hdf5(model_file, gen)
     img = img.resize((28, 28), Image.BILINEAR)
     image_array = (np.asarray(img).astype('f').transpose(2, 0, 1) + 1) / 128.0 - 1.0
     zc, zh, zw = image_array.shape

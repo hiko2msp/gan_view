@@ -42,10 +42,9 @@ def clip_img(x):
 gen = Generator()
 gen.to_cpu()
 
-model_file = 'model.h5'
-serializers.load_hdf5(model_file, gen)
-
 def gen_image_b64(noise_list):
+    model_file = 'model.h5'
+    serializers.load_hdf5(model_file, gen)
     z = np.array(noise_list)
     noise = (z - 50) / float(100)
     z = Variable(noise.reshape((1, 10)).astype(np.float32))

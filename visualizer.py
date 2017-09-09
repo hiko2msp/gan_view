@@ -91,8 +91,6 @@ def clip_img(x):
 gen = Unet128Generator()
 gen.to_cpu()
 
-model_file = 'model.h5'
-serializers.load_hdf5(model_file, gen)
 
 
 def load_image(filepath):
@@ -100,6 +98,8 @@ def load_image(filepath):
     return img
 
 def segment(img):
+    model_file = 'model.h5'
+    serializers.load_hdf5(model_file, gen)
     img = img.resize((128, 128), Image.BILINEAR)
     image_array = (np.asarray(img).astype('f').transpose(2, 0, 1) + 1) / 128.0 - 1.0
     zc, zh, zw = image_array.shape

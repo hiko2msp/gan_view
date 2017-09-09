@@ -16,10 +16,15 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html', **{
+    try:
+        segmented_image = segment(load_image('images/fish.png'))
+    except:
+        segmented_image = load_image('images/no_image.png')
+    
+    return render_template('index.html', **{ 
         'origin_image': to_base_64(load_image('images/fish.png')),
-        'segmented_image': to_base_64(segment(load_image('images/fish.png'))),
-    })
+        'segmented_image': to_base_64(segmented_image),
+    })  
 
 @app.route('/upload_model', methods=['POST'])
 def upload():
@@ -43,10 +48,15 @@ def upload_image():
 
 @app.route('/reset', methods=['GET'])
 def reset():
-    return render_template('index.html', **{
+    try:
+        segmented_image = segment(load_image('images/fish.png'))
+    except:
+        segmented_image = load_image('images/no_image.png')
+    
+    return render_template('index.html', **{ 
         'origin_image': to_base_64(load_image('images/fish.png')),
-        'segmented_image': to_base_64(segment(load_image('images/fish.png'))),
-    })
+        'segmented_image': to_base_64(segmented_image),
+    })  
 
 @app.route('/js/<path:path>')
 def send_js(path):

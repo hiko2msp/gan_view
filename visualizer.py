@@ -46,7 +46,7 @@ def gen_image_b64(noise_list):
     model_file = 'model.h5'
     serializers.load_hdf5(model_file, gen)
     z = np.array(noise_list)
-    noise = (z - 50) / float(100)
+    noise = (z - 50) / float(50)
     z = Variable(noise.reshape((1, 10)).astype(np.float32))
     x = gen(z, test=True)
     x = x.data

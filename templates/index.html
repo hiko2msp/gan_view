@@ -18,6 +18,13 @@
     </div>
     <div class="container">
       <h3>モデル確認</h3>
+
+      <ul>
+        <li>自分で作成したモデルアップロードして、画像を入力すると結果を確認することができます</li>
+        <li>デフォルトでは、魚の形を特定するモデルが入っています</li>
+      </ul>
+      
+
       <form action="/upload_model" method="post" enctype="multipart/form-data">
         <input type="file" name="file" style="display:inline">
         <input type="submit" value="モデルのアップロード">

@@ -51,7 +51,7 @@ def send_js(path):
     return send_from_directory('js', path)
 
 @app.route('/favicon.ico')
-def send_image(path):
+def send_image():
     return send_from_directory('images', 'favicon.png')
 
 

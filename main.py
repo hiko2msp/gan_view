@@ -24,10 +24,22 @@ def index():
 
 @app.route('/upload_model', methods=['POST'])
 def upload():
-    file_obj = request.files['file']
-    filename = file_obj.filename
-    if filename[-2:] == 'h5' or filename[-3:] == 'tsv':
-        file_obj.save('./model.h5')
+    data_file_obj = request.files['datafile']
+    index_file_obj = request.files['indexfile']
+    meta_file_obj = request.files['metafile']
+    data_filename = data_file_obj.filename
+    index_filename = index_file_obj.filename
+    meta_filename = meta_file_obj.filename
+    if 'data' in data_filename:
+        data_file_obj.save('./models/model.ckpt.data-00000-of-00001')
+    else:
+        return '失敗しました', 400
+    if index_filename.endswith('index'):
+        index_file_obj.save('./models/model.ckpt.index')
+    else:
+        return '失敗しました', 400
+    if meta_filename.endswith('meta'):
+        meta_file_obj.save('./models/model.ckpt.meta')
     else:
         return '失敗しました', 400
     return redirect(url_for('index'))

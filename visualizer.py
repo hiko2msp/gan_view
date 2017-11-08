@@ -96,7 +96,7 @@ def segment(img):
 
     with tf.Session() as sess:
         # Load Model
-        saver.restore(sess, 'models/model.ckpt-420')
+        saver.restore(sess, 'models/model.ckpt')
         # Generate Image from Input Image
         x = sess.run(gen, feed_dict={z_gen: z})
 
